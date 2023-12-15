@@ -9,11 +9,12 @@ from telebot import TeleBot, types
 
 
 BOT_TOKEN: str
+AVATAR_URL: str
 
 
 def set_up() -> bool:
 
-    global BOT_TOKEN
+    global BOT_TOKEN, AVATAR_URL
 
     # Logging:
     basicConfig(level=INFO)
@@ -32,6 +33,14 @@ def set_up() -> bool:
 
         return False
 
+    AVATAR_URL = environ.get('AVATAR_URL', default=None)
+
+    if not AVATAR_URL:
+
+        error('AVATAR_URL environment variable is not set!')
+
+        return False
+
     return True
 
 
@@ -44,6 +53,7 @@ def run_bot() -> None:
     main_markup.add(types.KeyboardButton(text='/help'))
     main_markup.add(types.KeyboardButton(text='/info'))
     main_markup.add(types.KeyboardButton(text='/random_fact'))
+    main_markup.add(types.KeyboardButton(text='/get_avatar'))
 
     @bot.message_handler(commands=['start'])
     def start_handler(message: types.Message):
@@ -58,7 +68,8 @@ def run_bot() -> None:
         reply_message = (
             '/help - список всех команд (ты уже тут)\n'
             '/info - информация о загадочном (нет) <span class="tg-spoiler">LaGGgggg</span>\n'
-            '/random_fact - случайный факт обо мне'
+            '/random_fact - случайный факт обо мне\n'
+            '/get_avatar - получить мою крутую аватарку'
         )
 
         bot.reply_to(message, reply_message, reply_markup=main_markup, parse_mode='HTML')
@@ -128,6 +139,24 @@ def run_bot() -> None:
         )
 
         bot.reply_to(message, choice(facts), reply_markup=main_markup)
+
+    @bot.message_handler(commands=['get_avatar'])
+    def text_handler(message: types.Message):
+        bot.send_photo(message.chat.id, photo=AVATAR_URL, caption='лучшая аватарка в мире', reply_markup=main_markup)
+
+    @bot.message_handler(content_types=['text'])
+    def text_handler(message: types.Message):
+
+        replies = (
+            'О, круто!',
+            'Верно подмечено!',
+            'Как с языка снял',
+            'Какой ты всё-таки умный',
+            'По-любому что-то умное написал',
+            'Как лаконично то!',
+        )
+
+        bot.reply_to(message, choice(replies), reply_markup=main_markup)
 
     bot.infinity_polling()
 

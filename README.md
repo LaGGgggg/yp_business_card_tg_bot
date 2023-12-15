@@ -6,6 +6,8 @@ Create file `.env`. Next, paste it in `.env` and add your bot token
 
 ```dotenv
 BOT_TOKEN=<your_bot_token>
+# example: https://postimg.cc/fkkkL35q
+AVATAR_URL=<link_to_your_avatar>
 ```
 
 ## Setup with docker compose
