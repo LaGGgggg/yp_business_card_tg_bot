@@ -12,7 +12,7 @@ BOT_TOKEN=<your_bot_token>
 
 ```bash
 git clone https://github.com/LaGGgggg/yp_business_card_tg_bot
-cd stocks_dynamic_info_bot
+cd yp_business_card_tg_bot
 docker compose up -d --build
 ```
 
@@ -20,7 +20,7 @@ docker compose up -d --build
 
 ```bash
 git clone https://github.com/LaGGgggg/yp_business_card_tg_bot
-cd stocks_dynamic_info_bot
+cd yp_business_card_tg_bot
 docker build . -t tg-bot
 docker run --detach -it -p 8080:8080 tg-bot
 ```
