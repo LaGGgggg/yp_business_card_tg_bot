@@ -48,7 +48,7 @@ def run_bot() -> None:
 
     bot = TeleBot(BOT_TOKEN)
 
-    main_markup = types.ReplyKeyboardMarkup(resize_keyboard=True)
+    main_markup = types.ReplyKeyboardMarkup(resize_keyboard=True, row_width=2)
 
     main_markup.add(types.KeyboardButton(text='/help'))
     main_markup.add(types.KeyboardButton(text='/info'))
